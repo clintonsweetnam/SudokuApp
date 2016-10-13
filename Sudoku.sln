@@ -1,0 +1,69 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F36697D3-0ABC-4918-AA99-EA27ED067873}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{3574985D-0FA8-4AD9-B1D6-BF9DED91861B}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Sudoku", "src\Sudoku\Sudoku.xproj", "{C1EF0124-6B9D-4628-A088-9993761CEEB0}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Sudoku.Types", "src\Sudoku.Types\Sudoku.Types.xproj", "{44094F56-418F-4DC8-82CA-3A997EAAC585}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Sudoku.Repositories", "src\Sudoku.Repositories\Sudoku.Repositories.xproj", "{B9915CE8-2B33-47B1-B1A9-4BF3001A7C96}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Soduko.Services", "src\Soduko.Services\Soduko.Services.xproj", "{54C12890-AE87-4EA7-B1D0-100680D7F12A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{101F2BD0-0FB6-4C08-908F-93F7B2A4ACE6}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Sudoku.UnitTests", "tests\Sudoku.UnitTests\Sudoku.UnitTests.xproj", "{F454796E-24DF-4EAF-BFD0-233EDD654353}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Sudoku.Solver", "tests\Sudoku.Solver\Sudoku.Solver.xproj", "{52AE4736-EB9C-444B-8B8F-75C1004F3814}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C1EF0124-6B9D-4628-A088-9993761CEEB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C1EF0124-6B9D-4628-A088-9993761CEEB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C1EF0124-6B9D-4628-A088-9993761CEEB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C1EF0124-6B9D-4628-A088-9993761CEEB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{44094F56-418F-4DC8-82CA-3A997EAAC585}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{44094F56-418F-4DC8-82CA-3A997EAAC585}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{44094F56-418F-4DC8-82CA-3A997EAAC585}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{44094F56-418F-4DC8-82CA-3A997EAAC585}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9915CE8-2B33-47B1-B1A9-4BF3001A7C96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9915CE8-2B33-47B1-B1A9-4BF3001A7C96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9915CE8-2B33-47B1-B1A9-4BF3001A7C96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9915CE8-2B33-47B1-B1A9-4BF3001A7C96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54C12890-AE87-4EA7-B1D0-100680D7F12A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54C12890-AE87-4EA7-B1D0-100680D7F12A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54C12890-AE87-4EA7-B1D0-100680D7F12A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54C12890-AE87-4EA7-B1D0-100680D7F12A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F454796E-24DF-4EAF-BFD0-233EDD654353}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F454796E-24DF-4EAF-BFD0-233EDD654353}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F454796E-24DF-4EAF-BFD0-233EDD654353}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F454796E-24DF-4EAF-BFD0-233EDD654353}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52AE4736-EB9C-444B-8B8F-75C1004F3814}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52AE4736-EB9C-444B-8B8F-75C1004F3814}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52AE4736-EB9C-444B-8B8F-75C1004F3814}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52AE4736-EB9C-444B-8B8F-75C1004F3814}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C1EF0124-6B9D-4628-A088-9993761CEEB0} = {F36697D3-0ABC-4918-AA99-EA27ED067873}
+		{44094F56-418F-4DC8-82CA-3A997EAAC585} = {F36697D3-0ABC-4918-AA99-EA27ED067873}
+		{B9915CE8-2B33-47B1-B1A9-4BF3001A7C96} = {F36697D3-0ABC-4918-AA99-EA27ED067873}
+		{54C12890-AE87-4EA7-B1D0-100680D7F12A} = {F36697D3-0ABC-4918-AA99-EA27ED067873}
+		{F454796E-24DF-4EAF-BFD0-233EDD654353} = {101F2BD0-0FB6-4C08-908F-93F7B2A4ACE6}
+		{52AE4736-EB9C-444B-8B8F-75C1004F3814} = {101F2BD0-0FB6-4C08-908F-93F7B2A4ACE6}
+	EndGlobalSection
+EndGlobal

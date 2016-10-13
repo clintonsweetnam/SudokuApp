@@ -1,0 +1,31 @@
+﻿body{
+    font-family: 'Abhaya Libre', serif;    
+}
+
+.header{
+    background:#1d2120;
+    color:#fff;
+}
+
+.tile{
+    border:1px solid #000;
+    width:10%;
+    padding:0px;
+    margin:0px;
+}
+
+.tile-input{
+    text-align:center;
+    width:100%;
+    opacity: 0.7;
+}
+
+.in-focus{
+    border:1px solid red;
+    background:red;
+}
+
+.opposition-in-focus{
+    border:1px solid green;
+    background:green;
+}

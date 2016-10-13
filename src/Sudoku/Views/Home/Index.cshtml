@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="row header">
+    <div class="col-xs-2">
+        <p id="gameId">000</p>
+    </div>
+    <div class="col-xs-2">
+        <button class="btn btn-default" onclick="startNewGame()"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+    </div>
+    <div class="col-xs-6">
+        <input id="existingGameId" type="text" />
+    </div>
+    <div class="col-xs-2">
+        <button class="btn btn-default" onclick="joinExistingGame()"><i class="fa fa-plus" aria-hidden="true"></i></button>
+    </div>
+</div>
+<div id="gameContainer" class="div-xs-12">
+    <!-- Game Goes Here -->
+</div>
+
