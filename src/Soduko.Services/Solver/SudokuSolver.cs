@@ -70,8 +70,6 @@ namespace Soduko.Services.Solver
                 }
             }
 
-
-
             return result;
         }
 
