@@ -14,16 +14,13 @@ namespace Sudoku.Solver
         {
             Console.WriteLine("Welcome to sudoku solver");
 
-            //Warm static class up
-            //SudokuSolver.TrySolve(new int[9, 9]);
-
             var totalSolved = 0;
 
             var times = new List<long>();
 
             var isSolved = true;
 
-            for (int i = 1; i < 51; i++)
+            for (int i = 1; i < 52; i++)
             {
                 var sudoku = GetSampleSudoku(i);
 

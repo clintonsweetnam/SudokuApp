@@ -65,7 +65,6 @@ namespace Soduko.Services.Solver
 
                                 lastGuess = guesses.OrderByDescending(g => g.GuessOrder).First();
                             }
-
                         }
                     }
                 }
