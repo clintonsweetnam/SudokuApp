@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Sudoku.UnitTests.Types
 {
-    public class When_using_board_type
+    public class When_using_BoardType
     {
         [Fact]
         public void Should_instantiate_with_null_int_array()

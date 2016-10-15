@@ -7,7 +7,7 @@
 
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>52ae4736-eb9c-444b-8b8f-75c1004f3814</ProjectGuid>
+    <ProjectGuid>e38af48d-66d2-423f-a42a-667f1772f01b</ProjectGuid>
     <RootNamespace>Sudoku.Solver</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>

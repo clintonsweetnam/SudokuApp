@@ -15,7 +15,7 @@ namespace Sudoku
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
-                .UseUrls("http://localhost:5000", "http://192.168.0.32:5000")
+                .UseUrls("http://*:5000")
                 .UseStartup<Startup>()
                 .Build();
 
