@@ -20,4 +20,5 @@ using System.Runtime.InteropServices;
 
 //Need to mark internal visible to unit tests to allow testing
 [assembly: InternalsVisibleTo("Sudoku.UnitTests")]
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")] 
 

@@ -1,8 +1,6 @@
-﻿using Sudoku.Solver.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Moq;
+using Sudoku.Solver.Interfaces;
+using Sudoku.Solver.Types;
 using Xunit;
 
 namespace Sudoku.UnitTests.Solver
@@ -11,10 +9,72 @@ namespace Sudoku.UnitTests.Solver
     {
         private readonly TileContainer _tileConainer;
 
+
         public When_using_TileContainer()
         {
             _tileConainer = new TileContainer(0, 0);
         }
+
+        [Fact]
+        public void Should_remove_observer_if_it_was_not_a_guess()
+        {
+            var _solvedTileContainer = new TileContainer(0, 0, 8);
+
+            _tileConainer.Subscribe(_solvedTileContainer);
+
+            _tileConainer.Update(_solvedTileContainer, true);
+
+            Assert.False(_tileConainer.Observers.Contains(_solvedTileContainer));
+        }
+
+        [Fact]
+        public void Should_remove_possible_value_if_update_called_and_not_solved()
+        {
+            var _solvedTileContainer = new TileContainer(0, 0, 8);
+
+            _tileConainer.Update(_solvedTileContainer, false);
+
+            Assert.False(_tileConainer.PossibleValues.Contains(8));
+        }
+
+        #region Test Observer
+        [Fact]
+        public void Should_add_subscriber_when_subscribe_is_called()
+        {
+            Mock<ISudokuObservable<TileContainer>> observer = new Mock<ISudokuObservable<TileContainer>>();
+
+            _tileConainer.Subscribe(observer.Object);
+            Assert.Equal(1, _tileConainer.Observers.Count);
+        }
+
+        [Fact]
+        public void Should_remove_subscriber_when_unsubscribe_is_called()
+        {
+            Mock<ISudokuObservable<TileContainer>> observer = new Mock<ISudokuObservable<TileContainer>>();
+
+            _tileConainer.Subscribe(observer.Object);
+            Assert.Equal(1, _tileConainer.Observers.Count);
+
+            _tileConainer.UnSubscribe(observer.Object);
+            Assert.Equal(0, _tileConainer.Observers.Count);
+        }
+
+        [Fact]
+        public void Should_call_subscriber_it_when_it_is_solved()
+        {
+            Mock<ISudokuObservable<TileContainer>> observer = new Mock<ISudokuObservable<TileContainer>>();
+
+            _tileConainer.Subscribe(observer.Object);
+
+            //Lets solve it
+            for(var i = 1;i < 9;i++)
+            {
+                _tileConainer.RemovePossibleValue(i, false);
+            }
+
+            observer.Verify(o => o.Update(_tileConainer, false), Times.Once);
+        }
+        #endregion
 
         #region Test ICopyable 
         [Fact]
@@ -26,11 +86,39 @@ namespace Sudoku.UnitTests.Solver
 
             Assert.Equal(_tileConainer.Row, copy.Row);
             Assert.Equal(_tileConainer.Column, copy.Column);
+            Assert.Equal(_tileConainer.Solution, copy.Solution);
             Assert.False(copy.PossibleValues.Contains(2));
             Assert.True(copy.PossibleValues.Contains(3));
 
             copy.Row = 1;
             Assert.NotEqual(_tileConainer.Row, copy.Row);
+
+        }
+        #endregion
+
+        #region Test IMomento
+        [Fact]
+        public void Should_be_able_to_revert_to_momento_state()
+        {
+            _tileConainer.Solution = 7;
+            _tileConainer.SaveMomento();
+
+            _tileConainer.PossibleValues.Remove(1);
+            _tileConainer.Column = 9;
+            _tileConainer.Row = 7;
+
+            Assert.True(_tileConainer.TryRevertToMomento());
+
+            Assert.Equal(9, _tileConainer.PossibleValues.Count);
+            Assert.Equal(0, _tileConainer.Row);
+            Assert.Equal(0, _tileConainer.Column);
+            Assert.Equal(7, _tileConainer.Solution);
+        }
+
+        [Fact]
+        public void Should_return_false_if_momento_was_never_saved()
+        {
+            Assert.False(_tileConainer.TryRevertToMomento());
 
         }
         #endregion
