@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Soduko.Services.Solver
+namespace Sudoku.Services.Solver
 {
+    [Obsolete("This solver has been replaced by Sudoku.Solver.SudokuSolver")]
     public static class SudokuSolver
     {
         public static int SolvedCount;

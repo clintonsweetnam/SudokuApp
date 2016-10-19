@@ -3,20 +3,41 @@
 }
 
 <div class="row header">
-    <div class="col-xs-2">
-        <p id="gameId">000</p>
-    </div>
-    <div class="col-xs-2">
-        <button class="btn btn-default" onclick="startNewGame()"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+    <div class="col-xs-3 logo">
+        <h3 data-toggle="tooltip" id="header-logo" data-placement="bottom" title="000">Sudoku</h3>
     </div>
     <div class="col-xs-6">
-        <input id="existingGameId" type="text" />
     </div>
-    <div class="col-xs-2">
-        <button class="btn btn-default" onclick="joinExistingGame()"><i class="fa fa-plus" aria-hidden="true"></i></button>
+    <div class="col-xs-3">
+        <div class="btn-group btn-group-xs pull-right" role="group" aria-label="...">
+            <button id="new-game" type="button" class="btn btn-default" onclick="startNewGame()">
+                <i class="fa fa-gamepad fa-lg" aria-hidden="true"></i>
+            </button>
+            <button id="exiting-game-options" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-default">
+                <i class="fa fa-user-plus fa-lg" aria-hidden="true"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="exiting-game-options">
+                <div class="col-lg-6">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button class="btn btn-success" onclick="joinExistingGame()" type="button">Go!</button>
+                        </span>
+                        <input type="text" class="form-control" id="existingGameId" placeholder="Game Id">
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+            </div>
+        </div>
     </div>
-</div>
+        <!--
+        <div class="col-xs-2">
+            <button class="btn btn-default" onclick="startNewGame()"><i class="fa fa-refresh" aria-hidden="true"></i></button>
+        </div>
+        <div class="col-xs-6">
+            
+        </div>
+        
+        -->
+    </div>
 <div id="gameContainer" class="div-xs-12">
-    <!-- Game Goes Here -->
 </div>
 

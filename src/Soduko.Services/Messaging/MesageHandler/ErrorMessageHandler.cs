@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Sudoku.Types.Messages;
 
-namespace Soduko.Services.Messaging.MesageHandler
+namespace Sudoku.Services.Messaging.MesageHandler
 {
     public class ErrorMessageHandler : IMessageHandler
     {

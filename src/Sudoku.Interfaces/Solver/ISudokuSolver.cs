@@ -2,6 +2,6 @@
 {
     public interface ISudokuSolver
     {
-        bool Solve(int[,] tiles);
+        bool TrySolve(int[,] tiles);
     }
 }

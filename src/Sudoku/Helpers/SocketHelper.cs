@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
-using Soduko.Services.Messaging;
-using Sudoku.Models;
+using Sudoku.Services.Messaging;
 using Sudoku.Repositories;
 using Sudoku.Types;
 using Sudoku.Types.Exceptions;

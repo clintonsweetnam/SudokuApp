@@ -16,23 +16,48 @@ namespace Sudoku.UnitTests.Solver
         }
 
         [Fact]
+        public void Should_chain_observer_updates_if_multiple_solutions()
+        {
+            var tileContainer2 = new TileContainer(1, 0);
+            for (var i = 1; i < 7; i++)
+                tileContainer2.RemovePossibleValue(i, true);
+
+            tileContainer2.RemovePossibleValue(9, true);
+
+            var tileContainer1 = new TileContainer(2, 0);
+            for (var i = 1; i < 8; i++)
+                tileContainer1.RemovePossibleValue(i, true);
+
+            tileContainer2.Subscribe(tileContainer1);
+            tileContainer1.Subscribe(tileContainer2);
+
+            tileContainer1.Subscribe(_tileConainer);
+
+            tileContainer1.Update(new TileContainer(0, 0, 9), false);
+            tileContainer1.IsSolved(false);
+
+            Assert.Null(tileContainer2.PossibleValues);
+            Assert.Equal(7, tileContainer2.Solution);
+        }
+
+        [Fact]
         public void Should_remove_observer_if_it_was_not_a_guess()
         {
-            var _solvedTileContainer = new TileContainer(0, 0, 8);
+            var solvedTileContainer = new TileContainer(0, 0, 8);
 
-            _tileConainer.Subscribe(_solvedTileContainer);
+            _tileConainer.Subscribe(solvedTileContainer);
 
-            _tileConainer.Update(_solvedTileContainer, true);
+            _tileConainer.Update(solvedTileContainer, true);
 
-            Assert.False(_tileConainer.Observers.Contains(_solvedTileContainer));
+            Assert.False(_tileConainer.Observers.ContainsKey(solvedTileContainer.GetKey()));
         }
 
         [Fact]
         public void Should_remove_possible_value_if_update_called_and_not_solved()
         {
-            var _solvedTileContainer = new TileContainer(0, 0, 8);
+            var solvedTileContainer = new TileContainer(0, 0, 8);
 
-            _tileConainer.Update(_solvedTileContainer, false);
+            _tileConainer.Update(solvedTileContainer, false);
 
             Assert.False(_tileConainer.PossibleValues.Contains(8));
         }
@@ -42,6 +67,7 @@ namespace Sudoku.UnitTests.Solver
         public void Should_add_subscriber_when_subscribe_is_called()
         {
             Mock<ISudokuObservable<TileContainer>> observer = new Mock<ISudokuObservable<TileContainer>>();
+            observer.Setup(o => o.GetKey()).Returns("1-0");
 
             _tileConainer.Subscribe(observer.Object);
             Assert.Equal(1, _tileConainer.Observers.Count);
@@ -51,6 +77,7 @@ namespace Sudoku.UnitTests.Solver
         public void Should_remove_subscriber_when_unsubscribe_is_called()
         {
             Mock<ISudokuObservable<TileContainer>> observer = new Mock<ISudokuObservable<TileContainer>>();
+            observer.Setup(o => o.GetKey()).Returns("1-0");
 
             _tileConainer.Subscribe(observer.Object);
             Assert.Equal(1, _tileConainer.Observers.Count);
@@ -63,6 +90,7 @@ namespace Sudoku.UnitTests.Solver
         public void Should_call_subscriber_it_when_it_is_solved()
         {
             Mock<ISudokuObservable<TileContainer>> observer = new Mock<ISudokuObservable<TileContainer>>();
+            observer.Setup(o => o.GetKey()).Returns("1-0");
 
             _tileConainer.Subscribe(observer.Object);
 
@@ -70,6 +98,7 @@ namespace Sudoku.UnitTests.Solver
             for(var i = 1;i < 9;i++)
             {
                 _tileConainer.RemovePossibleValue(i, false);
+                _tileConainer.IsSolved(false);
             }
 
             observer.Verify(o => o.Update(_tileConainer, false), Times.Once);

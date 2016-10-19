@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Sudoku.Types.Messages;
 using Sudoku.Repositories;
 
-namespace Soduko.Services.Messaging.MesageHandler
+namespace Sudoku.Services.Messaging.MesageHandler
 {
     public class InfoMessageHandler : BaseMessageHandler, IMessageHandler
     {

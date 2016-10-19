@@ -1,4 +1,5 @@
 ﻿using Sudoku.Solver.Interfaces;
+using Sudoku.Types.Exceptions;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,7 +9,7 @@ namespace Sudoku.Solver.Types
     {
         public int Row { get; set; }
         public int Column { get; set; }
-        public IList<int> PossibleValues { get; private set; }
+        public IList<int> PossibleValues { get; set; }
         public int Solution { get; set; }
 
         private TileContainer _previousState { get; set; }
@@ -33,24 +34,29 @@ namespace Sudoku.Solver.Types
         {
             PossibleValues.Remove(possibleValue);
 
-            IsSolved(isNotGuess);
+            if (PossibleValues.Count == 0)
+                throw new NoValidSolutionException();
         } 
 
-        public override void Update(TileContainer container, bool unSubscribe)
+        public void SetSolution(int solution, bool isNotGuess)
         {
-            if (Solution == 0)
-            {
-                PossibleValues.Remove(container.Solution);
-                IsSolved(unSubscribe);
-            }
+            Solution = solution;
+            PossibleValues = null;
 
-            if (unSubscribe)
-                UnSubscribe(container);
+            CallAllObservers(Solution, isNotGuess);
+
+            IsSolved(isNotGuess);
+
+            if (isNotGuess)
+            {
+                Observers = null;
+                _previousState = null;
+            }
         }
 
-        private void IsSolved(bool shouldUnsubscript)
+        public override bool IsSolved(bool shouldUnsubscript)
         {
-            if (PossibleValues.Count == 1)
+            if (PossibleValues != null && PossibleValues.Count == 1)
             {
                 //Yay we got a solution\
                 Solution = PossibleValues.Single();
@@ -58,8 +64,33 @@ namespace Sudoku.Solver.Types
 
                 //Lets update all observers
                 CallAllObservers(Solution, shouldUnsubscript);
+
+                return true;
             }
+
+            return false;
         }
+
+        #region SudokuObserver Overrides
+        public override void Update(TileContainer container, bool unSubscribe)
+        {
+            if (Solution == 0)
+            {
+                PossibleValues.Remove(container.Solution);
+
+                if (PossibleValues.Count == 0)
+                    throw new NoValidSolutionException();
+            }
+
+            if (unSubscribe)
+                UnSubscribe(container);
+        }
+
+        public override string GetKey()
+        {
+            return $"{Column}-{Row}";
+        }
+        #endregion
 
         #region ICopyable
         public TileContainer Copy()
@@ -69,6 +100,11 @@ namespace Sudoku.Solver.Types
 
             foreach (var possibleValue in PossibleValues)
                 copy.PossibleValues.Add(possibleValue);
+
+            copy.Observers = new Dictionary<string, ISudokuObservable<TileContainer>>();
+
+            foreach (var observer in Observers)
+                copy.Observers.Add(observer);
 
             return copy;
         }
@@ -87,8 +123,14 @@ namespace Sudoku.Solver.Types
 
             Row = _previousState.Row;
             Column = _previousState.Column;
-            PossibleValues = _previousState.PossibleValues;
-            _previousState = null;
+
+            PossibleValues = new List<int>();
+            foreach (var possibleValue in _previousState.PossibleValues)
+                PossibleValues.Add(possibleValue);
+
+            Observers = new Dictionary<string, ISudokuObservable<TileContainer>>();
+            foreach (var observer in _previousState.Observers)
+                Observers.Add(observer);
 
             return true;
         }
@@ -96,12 +138,20 @@ namespace Sudoku.Solver.Types
 
         #region Private Methods
 
-        public void CallAllObservers(int solution, bool isGuess)
+        private void CallAllObservers(int solution, bool isNotGuess)
         {
-            foreach (var observer in Observers)
-                observer.Update(this, isGuess);
-        }
+            var observers = Observers.Values.ToList();
 
+            foreach (var observer in observers)
+            {
+                observer.Update(this, isNotGuess);
+            }
+
+            foreach (var observer in observers)
+            {
+                observer.IsSolved(isNotGuess);
+            }
+        }
         #endregion
     }
 }
