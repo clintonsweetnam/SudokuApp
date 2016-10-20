@@ -6,5 +6,6 @@ namespace Sudoku.Models
     {
         public long GameId { get; set; }
         public Guid UserId { get; set; }
+        public int[,] Board { get; set; }
     }
 }

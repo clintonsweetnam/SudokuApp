@@ -24,6 +24,9 @@ namespace Sudoku.Services.Messaging
                 case MessageType.TileBlur:
                     messageHandler = new TileBlurMessageHandler();
                     break;
+                case MessageType.MakeGuess:
+                    messageHandler = new MakeGuessMessageHandler();
+                    break;
                 case MessageType.Connection:
                     throw new Exception("Should not be calling the message handler factory for message of type connection");
 

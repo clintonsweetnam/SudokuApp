@@ -5,6 +5,7 @@ $(function () {
 
 var gameId;
 var userId;
+var focusTile;
 
 var socket;
 var scheme = document.location.protocol === 'https:' ? 'wss' : 'ws';
@@ -35,6 +36,15 @@ function HandleConnection(data) {
 
     createGameContainer();
 
+    for (var xPos = 0; xPos < 9; xPos++) {
+        for (var yPos = 0; yPos < 9; yPos++) {
+            var id = '#TileInputId-' + xPos + "-" + yPos;
+            var value = data.board[xPos][yPos];
+            if (value != 0)
+                $(id).val(value);
+        }
+    }
+
     socket = new WebSocket(connectionUrl);
 
     socket.onopen = function () {
@@ -56,16 +66,20 @@ function HandleConnection(data) {
             }, messageContent.StartInSeconds * 1000);
         }
         else if (message.Type === 'TileFocus') {
-            console.log(message.Content);
             var tileFocusEvent = JSON.parse(message.Content);
             var tileId = '#TileInputId-' + tileFocusEvent.XPos + "-" + tileFocusEvent.YPos;
-            if (tileFocusEvent.UserId === userId) 
-                $(tileId).addClass("in-focus");
-            else
-                $(tileId).addClass("opposition-in-focus");
+
+            var tileValue = $(tileId).val();
+
+            if (tileValue === '')
+            {
+                if (tileFocusEvent.UserId === userId) 
+                    $(tileId).addClass("in-focus");
+                else
+                    $(tileId).addClass("opposition-in-focus");
+            }
         }
         else if (message.Type === 'TileBlur') {
-            console.log(message.Content);
             var tileFocusEvent = JSON.parse(message.Content);
             var tileId = '#TileInputId-' + tileFocusEvent.XPos + "-" + tileFocusEvent.YPos;
 
@@ -73,6 +87,16 @@ function HandleConnection(data) {
             $(tileId).removeClass("opposition-in-focus");
         }
     };
+}
+
+function makeGuess(guess)
+{
+    var message = {};
+    message.XPos = focusTile[0];
+    message.YPos = focusTile[1];
+    message.UserId = userId;
+    message.Guess = guess;
+    sendMessage('MakeGuess', message);
 }
 
 function createGameContainer(){
@@ -107,9 +131,7 @@ function createGameContainer(){
         $('#gameContainer').append(rowHtml);
     }
 
-
-
-    var windowWidth = window.innerWidth - 21;
+    var windowWidth = window.innerWidth - 22;
     var tileSize = windowWidth / 9;
 
     var elements = document.getElementsByClassName("tile");
@@ -129,6 +151,7 @@ function createGameContainer(){
 
 function inputOnFocus(xPos, yPos) {
     var message = {};
+    focusTile = [xPos, yPos]
     message.XPos = xPos;
     message.YPos = yPos;
     message.UserId = userId;

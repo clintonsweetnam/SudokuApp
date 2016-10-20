@@ -12,6 +12,7 @@ namespace Sudoku.Types.Messages
         Connection,
         Error,
         TileFocus,
-        TileBlur
+        TileBlur,
+        MakeGuess
     }
 }

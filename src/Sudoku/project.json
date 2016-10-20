@@ -57,7 +57,8 @@
       "Views",
       "Areas/**/Views",
       "appsettings.json",
-      "web.config"
+      "web.config",
+      "Sample.txt"
     ]
   },
 

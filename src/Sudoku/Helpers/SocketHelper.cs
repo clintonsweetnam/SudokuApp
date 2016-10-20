@@ -56,19 +56,14 @@ namespace Sudoku.Helpers
 
             var game = _gameRepository.GetGame(newUserMessage.GameId);
 
+            game.SetPlayer(user);
+
             if (game == null)
             {
-                game = new Game(newUserMessage.GameId);
-                game.SetPlayer(user);
-
-                _gameRepository.AddGame(game);
-
                 await user.TrySendMessage(new SocketMessage(MessageType.Info, "Successfully started a new game", game.Id));
             }
             else
             {
-                game.SetPlayer(user);
-
                 var gameReadyToStartMessage = new GameReadyToStartMessage(3);
 
                 await user.TrySendMessage(new SocketMessage(MessageType.Info, "Successfully joined the game", game.Id));

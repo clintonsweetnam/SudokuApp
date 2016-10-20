@@ -7,6 +7,10 @@ body{
     background:  #efefef;  
 }
 
+input{
+    color:#000;
+}
+
 .header{
     background:#fff;
     color:#000;
@@ -33,6 +37,7 @@ body{
     text-align:center;
     padding:0px;
     border:0px;
+    color:#000;
 }
 
 .in-focus{

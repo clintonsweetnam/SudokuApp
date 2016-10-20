@@ -10,11 +10,11 @@ namespace Sudoku.Types
         //Lock Object
         private object obj = new object();
 
-        public int?[,] Tiles { get; private set;}
+        public int[,] Tiles { get; set;}
 
         public Board()
         {
-            Tiles = new int?[9, 9];
+            Tiles = new int[9, 9];
         }
 
         public bool TrySet(int value, int XPos, int YPos)
@@ -37,7 +37,7 @@ namespace Sudoku.Types
             var result = false;
 
             if (value >= 1 && value <= 9)
-                if(Tiles[xPos, yPos] == null)
+                if(Tiles[xPos, yPos] == 0)
                     if(!ExistsOnTheRowOrColumn(value, yPos, xPos))
                         if(!IsInArea(value, yPos, xPos))
                             result = true;
