@@ -11,5 +11,6 @@ namespace Sudoku.Types.Messages.MessageContentTypes
         public int XPos { get; set; }
         public int YPos { get; set; }
         public int Guess { get; set; }
+        public bool IsValidMove { get; set; }
     }
 }

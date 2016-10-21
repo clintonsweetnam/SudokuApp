@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Sudoku.Services.Solver
 {
-    [Obsolete("This solver has been replaced by Sudoku.Solver.SudokuSolver")]
     public static class SudokuSolver
     {
         public static int SolvedCount;

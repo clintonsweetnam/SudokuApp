@@ -86,6 +86,19 @@ function HandleConnection(data) {
             $(tileId).removeClass("in-focus");
             $(tileId).removeClass("opposition-in-focus");
         }
+        else if (message.Type === 'MakeGuess') {
+            var makeGuessEvent = JSON.parse(message.Content);
+            if(makeGuessEvent.IsValidMove)
+            {
+                console.log(makeGuessEvent.Guess);
+                var tileId = '#TileInputId-' + makeGuessEvent.XPos + "-" + makeGuessEvent.YPos;
+                $(tileId).val(makeGuessEvent.Guess);
+                toastr.success('Congrats... Valid Move!!!!', 'Unbelieveable')
+            }
+            else {
+                toastr.error('Invalid Move!!!', 'Inconceivable!')
+            }
+        }
     };
 }
 
