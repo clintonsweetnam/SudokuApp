@@ -30,7 +30,7 @@ input{
 }
 
 #gameContainer{
-    margin:10px 10px;
+    margin:5px 10px;
 }
 
 .tile-input{
@@ -62,4 +62,21 @@ input{
 
 .heavy-left-border{
     border-left:1px solid #333;
+}
+
+.score-card{
+    text-align:center;
+    margin-top:10px;
+}
+
+.you{
+    background:#809fff;
+}
+
+.them{
+    background:#ffad33;
+}
+
+.alert{
+    margin-bottom:10px;
 }

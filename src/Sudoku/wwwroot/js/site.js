@@ -3,8 +3,13 @@ $(function () {
     $('[data-toggle="tooltip"]').tooltip()
 })
 
+$('#buttons').hide();
+$('#scores').hide();
+
 var gameId;
 var userId;
+var myScore = 0;
+var theirScore = 0;
 var focusTile;
 
 var socket;
@@ -90,13 +95,34 @@ function HandleConnection(data) {
             var makeGuessEvent = JSON.parse(message.Content);
             if(makeGuessEvent.IsValidMove)
             {
-                console.log(makeGuessEvent.Guess);
+                if (makeGuessEvent.UserId === userId)
+                {
+                    myScore += 1;
+                    toastr.success('Congrats... +1 for you!! ', 'Unbelieveable');
+                    $('#your-score').text(myScore);
+                }
+                else
+                {
+                    theirScore += 1;
+                    toastr.warning('They got one right!!', 'Hurry Up');
+                    $('#their-score').text(theirScore);
+                }
                 var tileId = '#TileInputId-' + makeGuessEvent.XPos + "-" + makeGuessEvent.YPos;
                 $(tileId).val(makeGuessEvent.Guess);
-                toastr.success('Congrats... Valid Move!!!!', 'Unbelieveable')
             }
-            else {
-                toastr.error('Invalid Move!!!', 'Inconceivable!')
+            else
+            {
+                if (makeGuessEvent.UserId === userId) {
+                    myScore -= 1;
+                    toastr.error('Invalid Move.. -1 for you!', 'Inconceivable!')
+                    $('#your-score').text(myScore);
+                }
+                else {
+                    theirScore -= 1;
+                    toastr.success('They got one wrong!!', 'Yayp');
+                    $('#their-score').text(theirScore);
+                }
+                
             }
         }
     };
@@ -160,6 +186,9 @@ function createGameContainer(){
     }
 
     $('#gameContainer').show();
+    $('#buttons').show();
+    $('#scores').show();
+    
 }
 
 function inputOnFocus(xPos, yPos) {
