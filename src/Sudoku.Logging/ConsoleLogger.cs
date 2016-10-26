@@ -64,6 +64,8 @@ namespace Sudoku.Logging
 
             string logMessage = $"{DateTime.UtcNow.ToString()} : {message}";
 
+            Console.WriteLine(logMessage);
+
             Console.ForegroundColor = ConsoleColor.White;
         }
         #endregion

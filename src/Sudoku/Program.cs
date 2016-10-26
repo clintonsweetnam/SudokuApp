@@ -16,7 +16,7 @@ namespace Sudoku
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseUrls("http://*:5000")
-                .UseStartup<Startup>()
+                .UseStartup("Sudoku")
                 .Build();
 
             host.Run();

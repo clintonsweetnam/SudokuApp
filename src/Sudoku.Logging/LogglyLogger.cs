@@ -1,4 +1,6 @@
-﻿using Sudoku.Interfaces.Logging;
+﻿using Microsoft.Extensions.Options;
+using Sudoku.Interfaces.Logging;
+using Sudoku.Types.Configuration;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -7,11 +9,12 @@ namespace Sudoku.Logging
 {
     public class LogglyLogger : IAsyncLogger
     {
-
+        private readonly Configuration _configuration;
         HttpClient client;
 
-        public LogglyLogger()
+        public LogglyLogger(IOptions<Configuration> configuration)
         {
+            _configuration = configuration.Value;
             client = new HttpClient();
         }
 
@@ -58,8 +61,12 @@ namespace Sudoku.Logging
             var content = new StringContent(logMessage);
             content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("text/plain");
 
-            await client.PostAsync("http://logs-01.loggly.com/inputs/fa0efa39-e5e0-413d-80e6-504106af925a/tag/http/",
-                content);
+            var url = string.Format("{0}/inputs/{1}/tag/http/",
+                _configuration.Logging.LogglyBaseUrl,
+                _configuration.Logging.LogglyApiKey);
+
+
+            await client.PostAsync(url, content);
         }
 
         #endregion
