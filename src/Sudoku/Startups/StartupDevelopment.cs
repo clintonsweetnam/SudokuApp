@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Sudoku.Helpers;
 using Sudoku.Interfaces.Logging;
 using Sudoku.Logging;
 

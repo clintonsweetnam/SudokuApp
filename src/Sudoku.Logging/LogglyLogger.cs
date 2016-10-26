@@ -9,6 +9,7 @@ namespace Sudoku.Logging
 {
     public class LogglyLogger : IAsyncLogger
     {
+        private static string _logString = "";
         private readonly Configuration _configuration;
         HttpClient client;
 
@@ -58,15 +59,30 @@ namespace Sudoku.Logging
         {
             string logMessage = $"{DateTime.UtcNow.ToString()} : {message}";
 
-            var content = new StringContent(logMessage);
-            content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("text/plain");
+            if (string.IsNullOrEmpty(_logString))
+            {
+                _logString = logMessage;
+            }
+            else
+            {
+                _logString += $"\n{logMessage}";
 
-            var url = string.Format("{0}/inputs/{1}/tag/http/",
-                _configuration.Logging.LogglyBaseUrl,
-                _configuration.Logging.LogglyApiKey);
+                if (_logString.Length > 1000)
+                {
+                    var content = new StringContent(_logString);
+                    _logString = "";
+
+                    content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("text/plain");
+
+                    var url = string.Format("{0}/bulk/{1}/tag/bulk/",
+                        _configuration.Logging.LogglyBaseUrl,
+                        _configuration.Logging.LogglyApiKey);
+
+                    await client.PostAsync(url, content);
+                }
 
 
-            await client.PostAsync(url, content);
+            }
         }
 
         #endregion

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Sudoku.Types.Configuration;
 using Microsoft.Extensions.Options;
 using Sudoku.Interfaces.Logging;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Sudoku.Controllers
 {
@@ -20,8 +18,16 @@ namespace Sudoku.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            Stopwatch timer = Stopwatch.StartNew();
+
+            await Task.Delay(10);
+
+            timer.Stop();
+
+            await _logger.Trace($"Time in HomeController : {timer.ElapsedMilliseconds}ms");
+
             return View();
         }
     }
